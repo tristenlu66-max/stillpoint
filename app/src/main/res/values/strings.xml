@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">守一</string>
+    <string name="accessibility_description">在专注模式期间，仅检测当前前台应用；白名单外应用会显示守一的专注提醒。</string>
+</resources>
