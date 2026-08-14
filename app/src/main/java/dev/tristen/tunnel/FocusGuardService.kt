@@ -43,7 +43,6 @@ class FocusGuardService : Service() {
         if (latest != null) lastKnownForeground = latest
         return lastKnownForeground
     }
-    private fun isExempt(packageName: String) = packageName in setOf("android", "com.android.systemui", "com.android.settings", "com.vivo.settings", "com.android.permissioncontroller", "com.google.android.permissioncontroller", "com.vivo.permissionmanager", "com.android.inputmethod.latin", "com.google.android.inputmethod.latin", "com.android.documentsui", "com.android.dialer", "com.google.android.dialer")
     private fun notification() : android.app.Notification {
         val channel = NotificationChannel(CHANNEL_ID, "守一专注守护", NotificationManager.IMPORTANCE_LOW)
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)

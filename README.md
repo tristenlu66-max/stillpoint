@@ -23,9 +23,9 @@
 
 ### 下载与安装
 
-当前版本：**v0.2.5**（Android 8.0 / API 26 及以上）
+当前版本：**v0.2.6**（Android 8.0 / API 26 及以上）
 
-下载：[守一 v0.2.5 APK](releases/ShouYi-v0.2.5-debug.apk)
+下载：[守一 v0.2.6 APK](https://github.com/tristenlu66-max/stillpoint/releases/tag/v0.2.6)
 
 在部分 Android / vivo 设备上，侧载应用的无障碍服务可能被标记为“受限制的设置”。请在系统的应用详情页允许“受限制的设置”后，再开启 **守一专注拦截**。这是 Android 的安全机制，应用不能自行绕过或自行开启无障碍权限。
 
@@ -76,9 +76,9 @@
 
 ### Download and install
 
-Current version: **v0.2.5** (Android 8.0 / API 26+)
+Current version: **v0.2.6** (Android 8.0 / API 26+)
 
-Download: [Stillpoint v0.2.5 APK](releases/ShouYi-v0.2.5-debug.apk)
+Download: [Stillpoint v0.2.6 APK](https://github.com/tristenlu66-max/stillpoint/releases/tag/v0.2.6)
 
 On some Android / vivo devices, an Accessibility Service from a sideloaded app may be marked as a restricted setting. In the system app-details screen, allow restricted settings first, then enable **Stillpoint Focus Blocker**. This is an Android security safeguard; the app cannot enable or bypass this permission by itself.
 

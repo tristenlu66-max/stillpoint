@@ -44,27 +44,39 @@ private val Ink = Color(0xFF173747); private val Moss = Color(0xFF2A9CBF)
 private val Paper = Color(0xFFF5FAFB); private val Mist = Color(0xFFE1F2F6)
 
 class MainActivity : ComponentActivity() {
+    private var statusRevision by mutableIntStateOf(0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (FocusStore.get(this).active) FocusGuardService.start(this)
         if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 4)
-        setContent { ShouYiApp(this) }
+        setContent { ShouYiApp(this, statusRevision) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Permissions can change while the user is in Android Settings. Re-read
+        // them when they return instead of leaving a stale “not working” label.
+        statusRevision++
     }
 }
 
-@Composable private fun ShouYiApp(context: Context) {
+@Composable private fun ShouYiApp(context: Context, statusRevision: Int) {
     var session by remember { mutableStateOf(FocusStore.get(context)) }
     var choosing by remember { mutableStateOf(false) }
     MaterialTheme(colorScheme = lightColorScheme(primary = Moss, onPrimary = Color.White, surface = Paper, onSurface = Ink)) {
         Surface(color = Paper, modifier = Modifier.fillMaxSize()) {
             if (choosing) AppPicker(context, session.allowed, { allowed -> FocusStore.updateAllowed(context, allowed); session=FocusStore.get(context); choosing=false }, { choosing=false })
-            else Home(context, session, { session=FocusStore.get(context) }, { choosing=true })
+            else Home(context, session, { session=FocusStore.get(context) }, { choosing=true }, statusRevision)
         }
     }
 }
 
-@Composable private fun Home(context: Context, session: FocusSession, refresh: () -> Unit, choose: () -> Unit) {
+@Composable private fun Home(context: Context, session: FocusSession, refresh: () -> Unit, choose: () -> Unit, statusRevision: Int) {
     var task by remember(session.active) { mutableStateOf(session.task) }; var minutes by remember { mutableIntStateOf(50) }
+    // statusRevision is intentionally read here: it changes whenever MainActivity
+    // returns from Settings and triggers a fresh permission/service check.
+    statusRevision
     val access = isAccessibilityEnabled(context); val batteryOk = isIgnoringBatteryOptimizations(context); val connected = FocusAccessibilityService.isActuallyConnected()
     Column(Modifier.fillMaxSize().padding(horizontal = 24.dp)) {
         Spacer(Modifier.height(30.dp)); Text("守一", fontSize=34.sp, fontWeight=FontWeight.Bold, color=Ink)
